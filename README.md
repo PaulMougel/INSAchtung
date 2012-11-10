@@ -1,6 +1,6 @@
 # INSAchtung
 
-The world-famous arcade game inspired from Achtung, die Kurve !
+The world-famous arcade game inspired from _Achtung, die Kurve ! _.
 
 ## get coffee
 This step is optional.
@@ -18,5 +18,5 @@ make # requires coffee
 
 ## play
 ```bash
-open static/index.html # using your cutting-edge favorite web browser 
+open static/index.html # using your favorite cutting-edge web browser 
 ```
