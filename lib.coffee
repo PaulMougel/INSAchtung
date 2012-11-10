@@ -10,30 +10,33 @@ class Player
 		@radius = 1
 		@course = Math.PI/4
 
+		# Keys logic
 		@keysPressed = [false, false]
 		@lastKeyPressed = "none"
 
 		document.onkeydown = (event) =>
-			if event.keyCode in [79, 111]
+			if event.keyCode in [75, 79, 111]
 				@lastKeyPressed = "left"
 				@keysPressed[0] = true
-			else if event.keyCode in [80, 112]
+
+			else if event.keyCode in [76, 80, 112]
 				@lastKeyPressed = "right"
 				@keysPressed[1] = true
 
 		document.onkeyup = (event) =>
-			if event.keyCode in [79, 111]
+			if event.keyCode in [75, 79, 111]
 				@keysPressed[0] = false
 				if @keysPressed[1]
 					@lastKeyPressed = "right"
 				else
 					@lastKeyPressed = "none"
-			if event.keyCode in [80, 112]
+			if event.keyCode in [76, 80, 112]
 				@keysPressed[1] = false
-				if @keysPressed[2]
+				if @keysPressed[0]
 					@lastKeyPressed = "left"
 				else
 					@lastKeyPressed = "none"
+
 	paint: () ->
 		@updateCourse()
 		@updatePos()
@@ -42,12 +45,11 @@ class Player
 		context.strokeStyle = "#FF0000"
 		context.lineWidth = 5
 
-		addedCourse = (@course > Math.PI and @course < 2*Math.PI) ? -Math.PI/2 : Math.PI/2
-		circleCenterX = @pos[0] + Math.cos(@course + addedCourse)*@radius
-		circleCenterY = @pos[1] + Math.sin(@course + addedCourse)*@radius
-		startAngle = Math.acos((@lastPos[0] - circleCenterX) / @radius)
-		endAngle = Math.acos((@pos[0] - circleCenterX) / @radius)
-		
+		#addedCourse = (@course > Math.PI and @course < 2*Math.PI) ? -Math.PI/2 : Math.PI/2
+		#circleCenterX = @pos[0] + Math.cos(@course + addedCourse)*@radius
+		#circleCenterY = @pos[1] + Math.sin(@course + addedCourse)*@radius
+		#startAngle = Math.acos((@lastPos[0] - circleCenterX) / @radius)
+		#endAngle = Math.acos((@pos[0] - circleCenterX) / @radius)
 		#context.arc(circleCenterX, circleCenterY, @radius, startAngle, endAngle, false)
 
 		context.moveTo(@lastPos[0], @lastPos[1])
@@ -70,7 +72,6 @@ class Player
 		else if @lastKeyPressed is "right"
 			val = 2*Math.PI / 320
 		else
-			console.log(@lastKeyPressed)
 			val = 0
 
 		@course = @course + val
