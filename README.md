@@ -1,8 +1,11 @@
 INSAchtung
 ==========
 
-To compile:
+* compile (optional)
 ```bash
-make
+make # requires coffee
 ```
-To play: open Firefox/Chrome on the *index.html* file.
+* play
+```bash
+open static/index.html
+```
