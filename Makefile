@@ -1,4 +1,4 @@
 all:
-	coffee --join insachtung.js --compile Bitmap.coffee Painter.coffee Bonus.coffee Round.coffee Player.coffee Controller.coffee CrashController.coffee Main.coffee
+	coffee --join static/lib/insachtung.js --compile src/Bitmap.coffee src/Painter.coffee src/Bonus.coffee src/Round.coffee src/Player.coffee src/Controller.coffee src/CrashController.coffee src/Main.coffee
 watch:
-	coffee --join insachtung.js --watch --compile Bitmap.coffee Painter.coffee Bonus.coffee Round.coffee Player.coffee Controller.coffee CrashController.coffee Main.coffee
+	coffee --join static/lib/insachtung.js --watch --compile src/Bitmap.coffee src/Painter.coffee src/Bonus.coffee src/Round.coffee src/Player.coffee src/Controller.coffee src/CrashController.coffee src/Main.coffee
