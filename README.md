@@ -1,11 +1,10 @@
-INSAchtung
-==========
+# INSAchtung
 
-* compile (optional)
+## compile (optional)
 ```bash
 make # requires coffee
 ```
-* play
+## play
 ```bash
 open static/index.html
 ```
