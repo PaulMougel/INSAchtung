@@ -1,4 +1,3 @@
 class Bitmap
-	constructor: (@width, @height) ->
+	constructor: (@width, @height, @boundariesWidth) ->
 		@bitmap = new Array(@width*@height)
-	

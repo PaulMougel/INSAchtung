@@ -1,12 +1,14 @@
 # Player
 class Player
 	constructor: (@name, @color, @keys) ->
-		@pos = [Math.floor((Math.random()*700)+100), Math.floor((Math.random()*700)+100)]
-		@lastPos = [undefined, undefined]
+		@pos = {x: Math.floor((Math.random()*700)+100), y:Math.floor((Math.random()*700)+100)}
+		@lastPos = {x:undefined, y:undefined}
 		@radius = 1
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
-		@state = []
+		@score = 0
+
+		@bonuses = []
 
 		# Keys logic
 		@keysPressed = [false, false]
@@ -36,13 +38,14 @@ class Player
 	play: () ->
 		@updateCourse()
 		@updatePos()
+		@updateBonus()
 
 	updatePos: () ->
-		@lastPos[0] = @pos[0]
-		@lastPos[1] = @pos[1]
+		@lastPos.x = @pos.x
+		@lastPos.y = @pos.y
 		
-		@pos[0] = @pos[0] + Math.cos(@course)*@radius
-		@pos[1] = @pos[1] + Math.sin(@course)*@radius
+		@pos.x = @pos.x + Math.cos(@course)*@radius
+		@pos.y = @pos.y + Math.sin(@course)*@radius
 
 	updateCourse: () ->
 		if @lastKeyPressed is "left"
@@ -55,3 +58,12 @@ class Player
 		@course = @course + val
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
+
+	updateBonus: () ->
+		i = 0
+		while (i < @bonuses.length)
+			if @bonuses[i].duration is 0
+				@bonuses.splice(i, 1)
+			else
+				@bonuses[i].play()
+				i++
