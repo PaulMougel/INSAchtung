@@ -14,7 +14,7 @@ class Painter
 		# body
 		if not Bonus.listContainsBonus(player.bonuses, NoWall)
 			@context.beginPath()
-			@context.strokeStyle = player.color
+			@context.strokeStyle = player.static.color
 			@context.lineWidth = player.size
 			@context.moveTo(player.lastPos.x, player.lastPos.y)
 			@context.lineTo(player.pos.x, player.pos.y)

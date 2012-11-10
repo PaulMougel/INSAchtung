@@ -1,11 +1,15 @@
 class CrashController
-	constructor: (@controller, @bitmap) ->
+	activeRound: null
+	constructor: (@controller) ->
+
+	setActiveRound: (round) ->
+		@activeRound = round
 
 	checkForCrashes: (player) ->
 		# Check for boundaries collisions
 		# 	If not player in map, notify controller
-		if player.pos.x < @bitmap.boundariesWidth or player.pos.x > @bitmap.width - @bitmap.boundariesWidth or player.pos.y < @bitmap.boundariesWidth or player.pos.y > @bitmap.height - @bitmap.boundariesWidth
-			@controller.notifyPlayerDeath(player)
+		if player.pos.x < @controller.bitmap.boundariesWidth or player.pos.x > @controller.bitmap.width - @controller.bitmap.boundariesWidth or player.pos.y < @controller.bitmap.boundariesWidth or player.pos.y > @controller.bitmap.height - @controller.bitmap.boundariesWidth
+			@activeRound.notifyPlayerDeath(player)
 
 		# Else
 		#	Check for collisions in bitmap
