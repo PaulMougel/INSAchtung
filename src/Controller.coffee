@@ -10,6 +10,8 @@ class Controller
 
 	notifyRoundIsDone: () ->
 		for player in @players
+			console.log(player.name + ": " + player.score)
+		for player in @players
 			if player.score >= (@players.length - 1) * 10
 				return
 		round = new Round(@)

@@ -1,7 +1,7 @@
 # represents a player in the game, considering his coulour, his keys, his name
 class Player
-	@score = 0
 	constructor: (@name, @color, @keys) ->
+		@score = 0
 
 # represents the snake associated with a player during a specific round
 class PlayerInstance

@@ -175,12 +175,11 @@
 
   Player = (function() {
 
-    Player.score = 0;
-
     function Player(name, color, keys) {
       this.name = name;
       this.color = color;
       this.keys = keys;
+      this.score = 0;
     }
 
     return Player;
@@ -292,10 +291,15 @@
     }
 
     Controller.prototype.notifyRoundIsDone = function() {
-      var player, round, _i, _len, _ref;
+      var player, round, _i, _j, _len, _len1, _ref, _ref1;
       _ref = this.players;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         player = _ref[_i];
+        console.log(player.name + ": " + player.score);
+      }
+      _ref1 = this.players;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        player = _ref1[_j];
         if (player.score >= (this.players.length - 1) * 10) {
           return;
         }
