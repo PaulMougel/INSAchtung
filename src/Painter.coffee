@@ -10,6 +10,7 @@ class Painter
 		@drawLine(player.lastPos.x, player.lastPos.y, player.pos.x, player.pos.y, player.size, "white")
 
 	paintHead: (player) ->
+		console.log("painting head")
 		@drawCircle(player.pos.x, player.pos.y, player.size / 2, "yellow")
 
 	clearHead: (player) ->

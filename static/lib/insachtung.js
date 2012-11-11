@@ -34,6 +34,7 @@
     };
 
     Painter.prototype.paintHead = function(player) {
+      console.log("painting head");
       return this.drawCircle(player.pos.x, player.pos.y, player.size / 2, "yellow");
     };
 
@@ -276,8 +277,8 @@
 
     PlayerInstance.prototype.paint = function() {
       this["static"].painter.paintTrace(this);
-      this["static"].painter.paintHead(this);
-      return this["static"].painter.paintLastHead(this);
+      this["static"].painter.paintLastHead(this);
+      return this["static"].painter.paintHead(this);
     };
 
     PlayerInstance.prototype.playBonuses = function() {

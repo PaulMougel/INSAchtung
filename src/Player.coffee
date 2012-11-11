@@ -69,8 +69,8 @@ class PlayerInstance
 			@course -= 2*Math.PI
 	paint: () ->
 		@static.painter.paintTrace(@)
-		@static.painter.paintHead(@)
 		@static.painter.paintLastHead(@)
+		@static.painter.paintHead(@)
 	playBonuses: () ->
 		i = 0
 		while (i < @bonuses.length)
