@@ -237,7 +237,7 @@
           _this.lastKeyPressed = "right";
           return _this.keysPressed[1] = true;
         }
-      });
+      }, false);
       document.addEventListener("keyup", function(event) {
         if (event.keyCode === _this["static"].keys[0]) {
           _this.keysPressed[0] = false;
@@ -255,7 +255,7 @@
             return _this.lastKeyPressed = "none";
           }
         }
-      });
+      }, false);
     }
 
     PlayerInstance.prototype.play = function() {

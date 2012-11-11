@@ -24,6 +24,7 @@ class PlayerInstance
 				else if event.keyCode is @static.keys[1]
 					@lastKeyPressed = "right"
 					@keysPressed[1] = true
+		, false
 		)
 		document.addEventListener("keyup",
 			(event) =>
@@ -39,7 +40,7 @@ class PlayerInstance
 						@lastKeyPressed = "left"
 					else
 						@lastKeyPressed = "none"
-		)
+		, false)
 
 	play: () ->
 		@updateCourse()
