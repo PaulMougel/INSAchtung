@@ -26,14 +26,34 @@
     }
 
     Painter.prototype.paintPlayer = function(player) {
+      var anticlockwise, endAngle, radius, startAngle, x, y;
       if (!Bonus.listContainsBonus(player.bonuses, NoWall)) {
         this.context.beginPath();
         this.context.strokeStyle = player["static"].color;
         this.context.lineWidth = player.size;
         this.context.moveTo(player.lastPos.x, player.lastPos.y);
         this.context.lineTo(player.pos.x, player.pos.y);
-        this.context.closePath();
-        return this.context.stroke();
+        this.context.stroke();
+        x = player.lastPos.x;
+        y = player.lastPos.y;
+        radius = player.size / 2;
+        startAngle = 0;
+        endAngle = 2 * Math.PI;
+        anticlockwise = true;
+        this.context.beginPath();
+        this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+        this.context.fillStyle = player["static"].color;
+        this.context.fill();
+        x = player.pos.x;
+        y = player.pos.y;
+        radius = player.size / 2;
+        startAngle = 0;
+        endAngle = 2 * Math.PI;
+        anticlockwise = true;
+        this.context.beginPath();
+        this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+        this.context.fillStyle = "yellow";
+        return this.context.fill();
       }
     };
 
@@ -331,7 +351,7 @@
     };
 
     CrashController.prototype.checkForCrashes = function(player) {
-      if (player.pos.x < this.controller.bitmap.boundariesWidth || player.pos.x > this.controller.bitmap.width - this.controller.bitmap.boundariesWidth || player.pos.y < this.controller.bitmap.boundariesWidth || player.pos.y > this.controller.bitmap.height - this.controller.bitmap.boundariesWidth) {
+      if (player.pos.x < ((this.controller.bitmap.boundariesWidth / 2) / 2) || player.pos.x > this.controller.bitmap.width - (this.controller.bitmap.boundariesWidth / 2) || player.pos.y < (this.controller.bitmap.boundariesWidth / 2) || player.pos.y > this.controller.bitmap.height - (this.controller.bitmap.boundariesWidth / 2)) {
         return this.activeRound.notifyPlayerDeath(player);
       }
     };
