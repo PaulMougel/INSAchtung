@@ -16,27 +16,31 @@ class PlayerInstance
 		# Keys logic
 		@keysPressed = [false, false]
 		@lastKeyPressed = "none"
-		document.onkeydown = (event) =>
-			if event.keyCode is @static.keys[0]
-				@lastKeyPressed = "left"
-				@keysPressed[0] = true
-
-			else if event.keyCode is @static.keys[1]
-				@lastKeyPressed = "right"
-				@keysPressed[1] = true
-		document.onkeyup = (event) =>
-			if event.keyCode is @static.keys[0]
-				@keysPressed[0] = false
-				if @keysPressed[1]
-					@lastKeyPressed = "right"
-				else
-					@lastKeyPressed = "none"
-			if event.keyCode is @static.keys[1]
-				@keysPressed[1] = false
-				if @keysPressed[0]
+		document.addEventListener("keydown",
+			(event) =>
+				if event.keyCode is @static.keys[0]
 					@lastKeyPressed = "left"
-				else
-					@lastKeyPressed = "none"
+					@keysPressed[0] = true
+
+				else if event.keyCode is @static.keys[1]
+					@lastKeyPressed = "right"
+					@keysPressed[1] = true
+		)
+		document.addEventListener("keyup",
+			(event) =>
+				if event.keyCode is @static.keys[0]
+					@keysPressed[0] = false
+					if @keysPressed[1]
+						@lastKeyPressed = "right"
+					else
+						@lastKeyPressed = "none"
+				if event.keyCode is @static.keys[1]
+					@keysPressed[1] = false
+					if @keysPressed[0]
+						@lastKeyPressed = "left"
+					else
+						@lastKeyPressed = "none"
+		)
 
 	play: () ->
 		@updateCourse()

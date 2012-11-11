@@ -206,7 +206,7 @@
       this.bonuses = [];
       this.keysPressed = [false, false];
       this.lastKeyPressed = "none";
-      document.onkeydown = function(event) {
+      document.addEventListener("keydown", function(event) {
         if (event.keyCode === _this["static"].keys[0]) {
           _this.lastKeyPressed = "left";
           return _this.keysPressed[0] = true;
@@ -214,8 +214,8 @@
           _this.lastKeyPressed = "right";
           return _this.keysPressed[1] = true;
         }
-      };
-      document.onkeyup = function(event) {
+      });
+      document.addEventListener("keyup", function(event) {
         if (event.keyCode === _this["static"].keys[0]) {
           _this.keysPressed[0] = false;
           if (_this.keysPressed[1]) {
@@ -232,7 +232,7 @@
             return _this.lastKeyPressed = "none";
           }
         }
-      };
+      });
     }
 
     PlayerInstance.prototype.play = function() {
