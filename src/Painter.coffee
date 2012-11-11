@@ -41,11 +41,11 @@ class Painter
 	paintBonus: (bonus) ->
 
 	paintBoundaries: () ->
-		@context.strokeStyle = "yellow"
-		@context.lineWidth = @bitmap.boundariesWidth
-		@context.strokeRect(0, 0, @bitmap.width, @bitmap.height)
+		@context.fillStyle = "yellow"
+		@context.fillRect(0, 0, @bitmap.width, @bitmap.height)
+		@context.clearRect(@bitmap.boundariesWidth, @bitmap.boundariesWidth, @bitmap.width - 2 * @bitmap.boundariesWidth, @bitmap.height - 2 * @bitmap.boundariesWidth)
 
 	paintUI: () ->
-		
+
 	clearBoard: () ->
 		@context.clearRect(0, 0, @canvas.width, @canvas.height)

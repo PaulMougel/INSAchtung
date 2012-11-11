@@ -60,9 +60,9 @@
     Painter.prototype.paintBonus = function(bonus) {};
 
     Painter.prototype.paintBoundaries = function() {
-      this.context.strokeStyle = "yellow";
-      this.context.lineWidth = this.bitmap.boundariesWidth;
-      return this.context.strokeRect(0, 0, this.bitmap.width, this.bitmap.height);
+      this.context.fillStyle = "yellow";
+      this.context.fillRect(0, 0, this.bitmap.width, this.bitmap.height);
+      return this.context.clearRect(this.bitmap.boundariesWidth, this.bitmap.boundariesWidth, this.bitmap.width - 2 * this.bitmap.boundariesWidth, this.bitmap.height - 2 * this.bitmap.boundariesWidth);
     };
 
     Painter.prototype.paintUI = function() {};
@@ -351,7 +351,7 @@
     };
 
     CrashController.prototype.checkForCrashes = function(player) {
-      if (player.pos.x < ((this.controller.bitmap.boundariesWidth / 2) / 2) || player.pos.x > this.controller.bitmap.width - (this.controller.bitmap.boundariesWidth / 2) || player.pos.y < (this.controller.bitmap.boundariesWidth / 2) || player.pos.y > this.controller.bitmap.height - (this.controller.bitmap.boundariesWidth / 2)) {
+      if (player.pos.x < this.controller.bitmap.boundariesWidth || player.pos.x > this.controller.bitmap.width - this.controller.bitmap.boundariesWidth || player.pos.y < this.controller.bitmap.boundariesWidth || player.pos.y > this.controller.bitmap.height - this.controller.bitmap.boundariesWidth) {
         return this.activeRound.notifyPlayerDeath(player);
       }
     };
