@@ -11,7 +11,6 @@ class PlayerInstance
 		@radius = 1
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
-		@bonuses = []
 
 		# Keys logic
 		@keysPressed = [false, false]
@@ -45,7 +44,6 @@ class PlayerInstance
 	play: () ->
 		@updateCourse()
 		@updatePos()
-		@updateBonus()
 
 	updatePos: () ->
 		@lastPos.x = @pos.x
@@ -65,12 +63,3 @@ class PlayerInstance
 		@course = @course + val
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
-
-	updateBonus: () ->
-		i = 0
-		while (i < @bonuses.length)
-			if @bonuses[i].duration is 0
-				@bonuses.splice(i, 1)
-			else
-				@bonuses[i].play()
-				i++

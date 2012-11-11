@@ -20,8 +20,8 @@ class Round
 				for player in @alivePlayers
 
 					# No wall will be painted
-					if (Math.random()*10) < 0.015
-						player.bonuses.push(new NoWall(25))
+					#if (Math.random()*10) < 0.015
+						#player.bonuses.push(new NoWall(25))
 
 					player.play()
 				

@@ -23,38 +23,59 @@
       this.bitmap = bitmap;
       this.canvas = document.getElementById("canvas");
       this.context = this.canvas.getContext('2d');
+      this.hasToClearLastHead = false;
     }
 
     Painter.prototype.paintPlayer = function(player) {
+      this.paintTrace(player);
+      this.paintHead(player);
+      return this.clearLastHead(player);
+    };
+
+    Painter.prototype.paintTrace = function(player) {
+      this.context.beginPath();
+      this.context.strokeStyle = player["static"].color;
+      this.context.lineWidth = player.size;
+      this.context.moveTo(player.lastPos.x, player.lastPos.y);
+      this.context.lineTo(player.pos.x, player.pos.y);
+      return this.context.stroke();
+    };
+
+    Painter.prototype.clearTrace = function(player) {
+      this.context.beginPath();
+      this.context.strokeStyle = "white";
+      this.context.lineWidth = player.size;
+      this.context.moveTo(player.lastPos.x, player.lastPos.y);
+      this.context.lineTo(player.pos.x, player.pos.y);
+      return this.context.stroke();
+    };
+
+    Painter.prototype.paintHead = function(player) {
       var anticlockwise, endAngle, radius, startAngle, x, y;
-      if (!Bonus.listContainsBonus(player.bonuses, NoWall)) {
-        this.context.beginPath();
-        this.context.strokeStyle = player["static"].color;
-        this.context.lineWidth = player.size;
-        this.context.moveTo(player.lastPos.x, player.lastPos.y);
-        this.context.lineTo(player.pos.x, player.pos.y);
-        this.context.stroke();
-        x = player.lastPos.x;
-        y = player.lastPos.y;
-        radius = player.size / 2;
-        startAngle = 0;
-        endAngle = 2 * Math.PI;
-        anticlockwise = true;
-        this.context.beginPath();
-        this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-        this.context.fillStyle = player["static"].color;
-        this.context.fill();
-        x = player.pos.x;
-        y = player.pos.y;
-        radius = player.size / 2;
-        startAngle = 0;
-        endAngle = 2 * Math.PI;
-        anticlockwise = true;
-        this.context.beginPath();
-        this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-        this.context.fillStyle = "yellow";
-        return this.context.fill();
-      }
+      x = player.pos.x;
+      y = player.pos.y;
+      radius = player.size / 2;
+      startAngle = 0;
+      endAngle = 2 * Math.PI;
+      anticlockwise = true;
+      this.context.beginPath();
+      this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+      this.context.fillStyle = "yellow";
+      return this.context.fill();
+    };
+
+    Painter.prototype.clearLastHead = function(player) {
+      var anticlockwise, endAngle, radius, startAngle, x, y;
+      x = player.lastPos.x;
+      y = player.lastPos.y;
+      radius = player.size / 2;
+      startAngle = 0;
+      endAngle = 2 * Math.PI;
+      anticlockwise = true;
+      this.context.beginPath();
+      this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+      this.context.fillStyle = player["static"].color;
+      return this.context.fill();
     };
 
     Painter.prototype.paintBonus = function(bonus) {};
@@ -80,19 +101,6 @@
     function Bonus(duration) {
       this.duration = duration;
     }
-
-    Bonus.prototype.play = function(player) {};
-
-    Bonus.listContainsBonus = function(bonusList, bonusClass) {
-      var bonus, _i, _len;
-      for (_i = 0, _len = bonusList.length; _i < _len; _i++) {
-        bonus = bonusList[_i];
-        if (bonus instanceof bonusClass) {
-          return true;
-        }
-      }
-      return false;
-    };
 
     return Bonus;
 
@@ -142,9 +150,6 @@
           _ref = _this.alivePlayers;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             player = _ref[_i];
-            if ((Math.random() * 10) < 0.015) {
-              player.bonuses.push(new NoWall(25));
-            }
             player.play();
           }
           _ref1 = _this.alivePlayers;
@@ -222,7 +227,6 @@
       this.radius = 1;
       this.course = Math.floor((Math.random() * 2 * Math.PI) + 0);
       this.size = 5;
-      this.bonuses = [];
       this.keysPressed = [false, false];
       this.lastKeyPressed = "none";
       document.addEventListener("keydown", function(event) {
@@ -256,8 +260,7 @@
 
     PlayerInstance.prototype.play = function() {
       this.updateCourse();
-      this.updatePos();
-      return this.updateBonus();
+      return this.updatePos();
     };
 
     PlayerInstance.prototype.updatePos = function() {
@@ -280,21 +283,6 @@
       if (this.course > 2 * Math.PI) {
         return this.course -= 2 * Math.PI;
       }
-    };
-
-    PlayerInstance.prototype.updateBonus = function() {
-      var i, _results;
-      i = 0;
-      _results = [];
-      while (i < this.bonuses.length) {
-        if (this.bonuses[i].duration === 0) {
-          _results.push(this.bonuses.splice(i, 1));
-        } else {
-          this.bonuses[i].play();
-          _results.push(i++);
-        }
-      }
-      return _results;
     };
 
     return PlayerInstance;
