@@ -420,7 +420,8 @@
       }
     }
     controller.run(cleanPlayersConfiguration);
-    return playerSelectionForm.style.display = "none";
+    playerSelectionForm.style.display = "none";
+    return false;
   };
 
 }).call(this);

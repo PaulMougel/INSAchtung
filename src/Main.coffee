@@ -14,7 +14,7 @@ window.setLeftKey = (button, playerIndex) ->
 		playersConfiguration[playerIndex].left = e.keyCode
 		button.value = String.fromCharCode(e.keyCode)
 		document.onkeydown = undefined
-		
+
 window.setRightKey = (button, playerIndex) ->
 	document.onkeydown = (e) =>
 		playersConfiguration[playerIndex].right = e.keyCode
@@ -40,3 +40,5 @@ playerSelectionForm.onsubmit = (event) ->
 
 	# Hide form
 	playerSelectionForm.style.display = "none"
+
+	return false
