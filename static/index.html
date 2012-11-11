@@ -6,7 +6,48 @@
 	<title>INSAchtung</title>
 </head>
 <body>
-	<canvas height="800" width="800" id="canvas"></canvas>
+	<form id="playerSelectionForm">
+		<table>
+			<tr>
+				<td>Greenlee</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 0)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 0)"/></td>
+			</tr>
+
+			<tr>
+				<td>Greydon</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 1)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 1)"/></td>
+			</tr>
+
+			<tr>
+				<td>Pinkney</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 2)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 2)"/></td>
+			</tr>
+
+			<tr>
+				<td>Fred</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 3)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 3)"/></td>
+			</tr>
+
+			<tr>
+				<td>Bluebell</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 4)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 4)"/></td>
+			</tr>
+
+			<tr>
+				<td>Willem</td>
+				<td><input type="button" value="Left Key" onclick="window.setLeftKey(this, 5)"/></td>
+				<td><input type="button" value="Right Key" onclick="window.setRightKey(this, 5)"/></td>
+			</tr>
+		</table>
+		<input type="submit" value="Launch game!" id="launch" /> <br />
+	</form>
+
+	<canvas style="display:none" height="800" width="800" id="canvas"></canvas>
 	<script type="text/javascript" src="lib/insachtung.js"></script>
 </body>
 </html>

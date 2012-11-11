@@ -1,12 +1,9 @@
 class Controller
 	constructor: () ->
+		@players
 		@bitmap = new Bitmap(800, 800, 20)
 		@painter = new Painter(@bitmap)
 		@crashController = new CrashController(@)
-		@players = [
-			new Player("Greenlee", "green", [79, 80]),
-			new Player("Pinkney", "pink", [75, 76])
-		]
 
 	notifyRoundIsDone: () ->
 		for player in @players
@@ -17,6 +14,9 @@ class Controller
 		round = new Round(@)
 		round.launch()
 
-	run: () ->
+	run: (playersConfiguration) ->
+		@players = new Array()
+		for player in playersConfiguration
+			@players.push(new Player(player.name, player.colour, new Array(player.left, player.right)))
 		round = new Round(@)
 		round.launch()
