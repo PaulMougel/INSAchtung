@@ -15,6 +15,8 @@ class Round
 				# loop on this function until round is over
 				setTimeout(main, delay)
 
+				@controller.painter.clearBoard()
+
 				# Play turn
 				for player in @alivePlayers
 					# No wall will be painted

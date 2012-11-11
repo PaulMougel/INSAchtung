@@ -4,7 +4,5 @@ class Bonus
 
 class NoWall extends Bonus
 	play: () ->
-		@player.static.painter.clearTrace(@player)
-		@player.static.painter.clearHead(@player)
-		@player.static.painter.clearLastHead(@player)
 		--@duration
+		@player.lastPos().action = ACTION.MOVE_TO

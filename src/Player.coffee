@@ -6,12 +6,11 @@ class Player
 # represents the snake associated with a player during a specific round
 class PlayerInstance
 	constructor: (@static) ->
-		@pos = {x: Math.floor((Math.random()*700)+100), y:Math.floor((Math.random()*700)+100)}
-		@lastPos = {x: undefined, y: undefined}
 		@radius = 1
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
 		@bonuses = []
+		@positions = [new Position(Math.floor((Math.random()*700)+100), Math.floor((Math.random()*700)+100), ACTION.MOVE_TO)]
 
 		# Keys logic
 		@keysPressed = [false, false]
@@ -46,15 +45,11 @@ class PlayerInstance
 	play: () ->
 		@updateCourse()
 		@updatePos()
-		@paint()
 		@playBonuses()
+		@paint()
 
 	updatePos: () ->
-		@lastPos.x = @pos.x
-		@lastPos.y = @pos.y
-		
-		@pos.x = @pos.x + Math.cos(@course)*@radius
-		@pos.y = @pos.y + Math.sin(@course)*@radius
+		@positions.push(new Position(@lastPos().x + Math.cos(@course) * @radius, @lastPos().y + Math.sin(@course)*@radius, ACTION.LINE_TO))
 
 	updateCourse: () ->
 		if @lastKeyPressed is "left"
@@ -68,9 +63,9 @@ class PlayerInstance
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
 	paint: () ->
-		@static.painter.paintTrace(@)
-		@static.painter.paintLastHead(@)
+		@static.painter.paintPositions(@)
 		@static.painter.paintHead(@)
+
 	playBonuses: () ->
 		i = 0
 		while (i < @bonuses.length)
@@ -79,3 +74,6 @@ class PlayerInstance
 			else
 				@bonuses[i].play()
 				i++
+
+	lastPos: () ->
+		@positions[@positions.length - 1]

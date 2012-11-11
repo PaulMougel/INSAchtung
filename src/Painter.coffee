@@ -3,32 +3,21 @@ class Painter
 		@canvas = document.getElementById("canvas")
 		@context = @canvas.getContext('2d')
 
-	paintTrace: (player) ->
-		@drawLine(player.lastPos.x, player.lastPos.y, player.pos.x, player.pos.y, player.size, player.static.color)
-	
-	clearTrace: (player) ->
-		@drawLine(player.lastPos.x, player.lastPos.y, player.pos.x, player.pos.y, player.size, "white")
+	paintPositions: (player) ->
+		@context.beginPath()
+		@context.strokeStyle = player.static.color
+		@context.lineWidth = player.size
+
+		for position in player.positions
+			if position.action is ACTION.MOVE_TO
+				@context.moveTo(position.x, position.y)
+			else if position.action is ACTION.LINE_TO
+				@context.lineTo(position.x, position.y)
+
+		@context.stroke()
 
 	paintHead: (player) ->
-		console.log("painting head")
-		@drawCircle(player.pos.x, player.pos.y, player.size / 2, "yellow")
-
-	clearHead: (player) ->
-		@drawCircle(player.pos.x, player.pos.y, player.size / 2, "white")
-
-	paintLastHead: (player) ->
-		@drawCircle(player.lastPos.x, player.lastPos.y, player.size / 2, player.static.color)
-
-	clearLastHead: (player) ->
-		@drawCircle(player.lastPos.x, player.lastPos.y, player.size / 2, "white")
-
-	drawLine: (x1, y1, x2, y2, size, color) ->
-		@context.beginPath()
-		@context.strokeStyle = color
-		@context.lineWidth = size
-		@context.moveTo(x1, y1)
-		@context.lineTo(x2, y2)
-		@context.stroke()
+		@drawCircle(player.lastPos().x, player.lastPos().y, player.size / 2, "yellow")
 
 	drawCircle: (x, y, radius, color) ->
 		@context.beginPath()
