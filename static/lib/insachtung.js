@@ -207,16 +207,16 @@
       this.keysPressed = [false, false];
       this.lastKeyPressed = "none";
       document.onkeydown = function(event) {
-        if (event.keyCode === _this.player.keys[0]) {
+        if (event.keyCode === _this["static"].keys[0]) {
           _this.lastKeyPressed = "left";
           return _this.keysPressed[0] = true;
-        } else if (event.keyCode === _this.player.keys[1]) {
+        } else if (event.keyCode === _this["static"].keys[1]) {
           _this.lastKeyPressed = "right";
           return _this.keysPressed[1] = true;
         }
       };
       document.onkeyup = function(event) {
-        if (event.keyCode === _this.player.keys[0]) {
+        if (event.keyCode === _this["static"].keys[0]) {
           _this.keysPressed[0] = false;
           if (_this.keysPressed[1]) {
             _this.lastKeyPressed = "right";
@@ -224,7 +224,7 @@
             _this.lastKeyPressed = "none";
           }
         }
-        if (event.keyCode === _this.player.keys[1]) {
+        if (event.keyCode === _this["static"].keys[1]) {
           _this.keysPressed[1] = false;
           if (_this.keysPressed[0]) {
             return _this.lastKeyPressed = "left";

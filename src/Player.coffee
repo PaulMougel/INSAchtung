@@ -17,21 +17,21 @@ class PlayerInstance
 		@keysPressed = [false, false]
 		@lastKeyPressed = "none"
 		document.onkeydown = (event) =>
-			if event.keyCode is @player.keys[0]
+			if event.keyCode is @static.keys[0]
 				@lastKeyPressed = "left"
 				@keysPressed[0] = true
 
-			else if event.keyCode is @player.keys[1]
+			else if event.keyCode is @static.keys[1]
 				@lastKeyPressed = "right"
 				@keysPressed[1] = true
 		document.onkeyup = (event) =>
-			if event.keyCode is @player.keys[0]
+			if event.keyCode is @static.keys[0]
 				@keysPressed[0] = false
 				if @keysPressed[1]
 					@lastKeyPressed = "right"
 				else
 					@lastKeyPressed = "none"
-			if event.keyCode is @player.keys[1]
+			if event.keyCode is @static.keys[1]
 				@keysPressed[1] = false
 				if @keysPressed[0]
 					@lastKeyPressed = "left"
