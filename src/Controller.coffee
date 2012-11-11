@@ -17,6 +17,6 @@ class Controller
 	run: (playersConfiguration) ->
 		@players = new Array()
 		for player in playersConfiguration
-			@players.push(new Player(player.name, player.colour, new Array(player.left, player.right)))
+			@players.push(new Player(player.name, player.colour, new Array(player.left, player.right), @painter))
 		round = new Round(@)
 		round.launch()

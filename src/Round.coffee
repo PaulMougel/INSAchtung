@@ -8,7 +8,6 @@ class Round
 
 	launch: () ->
 		@controller.painter.clearBoard()
-		@controller.painter.paintBoundaries()
 
 		delay = 1/30
 		main = =>
@@ -18,20 +17,15 @@ class Round
 
 				# Play turn
 				for player in @alivePlayers
-
 					# No wall will be painted
-					#if (Math.random()*10) < 0.015
-						#player.bonuses.push(new NoWall(25))
+					if (Math.random()*10) < 0.015
+						player.bonuses.push(new NoWall(player, 25))
 
 					player.play()
 				
 				# Collision detection
 				for player in @alivePlayers
 					@controller.crashController.checkForCrashes(player)
-
-				# Paint
-				for player in @alivePlayers
-					@controller.painter.paintPlayer(player)
 
 		setTimeout(main, delay)
 

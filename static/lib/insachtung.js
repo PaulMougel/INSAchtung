@@ -23,62 +23,47 @@
       this.bitmap = bitmap;
       this.canvas = document.getElementById("canvas");
       this.context = this.canvas.getContext('2d');
-      this.hasToClearLastHead = false;
     }
 
-    Painter.prototype.paintPlayer = function(player) {
-      this.paintTrace(player);
-      this.paintHead(player);
-      return this.clearLastHead(player);
-    };
-
     Painter.prototype.paintTrace = function(player) {
-      this.context.beginPath();
-      this.context.strokeStyle = player["static"].color;
-      this.context.lineWidth = player.size;
-      this.context.moveTo(player.lastPos.x, player.lastPos.y);
-      this.context.lineTo(player.pos.x, player.pos.y);
-      return this.context.stroke();
+      return this.drawLine(player.lastPos.x, player.lastPos.y, player.pos.x, player.pos.y, player.size, player["static"].color);
     };
 
     Painter.prototype.clearTrace = function(player) {
-      this.context.beginPath();
-      this.context.strokeStyle = "white";
-      this.context.lineWidth = player.size;
-      this.context.moveTo(player.lastPos.x, player.lastPos.y);
-      this.context.lineTo(player.pos.x, player.pos.y);
-      return this.context.stroke();
+      return this.drawLine(player.lastPos.x, player.lastPos.y, player.pos.x, player.pos.y, player.size, "white");
     };
 
     Painter.prototype.paintHead = function(player) {
-      var anticlockwise, endAngle, radius, startAngle, x, y;
-      x = player.pos.x;
-      y = player.pos.y;
-      radius = player.size / 2;
-      startAngle = 0;
-      endAngle = 2 * Math.PI;
-      anticlockwise = true;
-      this.context.beginPath();
-      this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-      this.context.fillStyle = "yellow";
-      return this.context.fill();
+      return this.drawCircle(player.pos.x, player.pos.y, player.size / 2, "yellow");
+    };
+
+    Painter.prototype.clearHead = function(player) {
+      return this.drawCircle(player.pos.x, player.pos.y, player.size / 2, "white");
+    };
+
+    Painter.prototype.paintLastHead = function(player) {
+      return this.drawCircle(player.lastPos.x, player.lastPos.y, player.size / 2, player["static"].color);
     };
 
     Painter.prototype.clearLastHead = function(player) {
-      var anticlockwise, endAngle, radius, startAngle, x, y;
-      x = player.lastPos.x;
-      y = player.lastPos.y;
-      radius = player.size / 2;
-      startAngle = 0;
-      endAngle = 2 * Math.PI;
-      anticlockwise = true;
-      this.context.beginPath();
-      this.context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-      this.context.fillStyle = player["static"].color;
-      return this.context.fill();
+      return this.drawCircle(player.lastPos.x, player.lastPos.y, player.size / 2, "white");
     };
 
-    Painter.prototype.paintBonus = function(bonus) {};
+    Painter.prototype.drawLine = function(x1, y1, x2, y2, size, color) {
+      this.context.beginPath();
+      this.context.strokeStyle = color;
+      this.context.lineWidth = size;
+      this.context.moveTo(x1, y1);
+      this.context.lineTo(x2, y2);
+      return this.context.stroke();
+    };
+
+    Painter.prototype.drawCircle = function(x, y, radius, color) {
+      this.context.beginPath();
+      this.context.arc(x, y, radius, 0, 2 * Math.PI, true);
+      this.context.fillStyle = color;
+      return this.context.fill();
+    };
 
     Painter.prototype.paintBoundaries = function() {
       this.context.fillStyle = "yellow";
@@ -86,10 +71,9 @@
       return this.context.clearRect(this.bitmap.boundariesWidth, this.bitmap.boundariesWidth, this.bitmap.width - 2 * this.bitmap.boundariesWidth, this.bitmap.height - 2 * this.bitmap.boundariesWidth);
     };
 
-    Painter.prototype.paintUI = function() {};
-
     Painter.prototype.clearBoard = function() {
-      return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      return this.paintBoundaries();
     };
 
     return Painter;
@@ -98,7 +82,8 @@
 
   Bonus = (function() {
 
-    function Bonus(duration) {
+    function Bonus(player, duration) {
+      this.player = player;
       this.duration = duration;
     }
 
@@ -114,8 +99,11 @@
       return NoWall.__super__.constructor.apply(this, arguments);
     }
 
-    NoWall.prototype.play = function(player) {
-      return this.duration -= 1;
+    NoWall.prototype.play = function() {
+      this.player["static"].painter.clearTrace(this.player);
+      this.player["static"].painter.clearHead(this.player);
+      this.player["static"].painter.clearLastHead(this.player);
+      return --this.duration;
     };
 
     return NoWall;
@@ -141,27 +129,24 @@
       var delay, main,
         _this = this;
       this.controller.painter.clearBoard();
-      this.controller.painter.paintBoundaries();
       delay = 1 / 30;
       main = function() {
-        var player, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+        var player, _i, _j, _len, _len1, _ref, _ref1, _results;
         if (!_this.isOver) {
           setTimeout(main, delay);
           _ref = _this.alivePlayers;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             player = _ref[_i];
+            if ((Math.random() * 10) < 0.015) {
+              player.bonuses.push(new NoWall(player, 25));
+            }
             player.play();
           }
           _ref1 = _this.alivePlayers;
+          _results = [];
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             player = _ref1[_j];
-            _this.controller.crashController.checkForCrashes(player);
-          }
-          _ref2 = _this.alivePlayers;
-          _results = [];
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            player = _ref2[_k];
-            _results.push(_this.controller.painter.paintPlayer(player));
+            _results.push(_this.controller.crashController.checkForCrashes(player));
           }
           return _results;
         }
@@ -200,10 +185,11 @@
 
   Player = (function() {
 
-    function Player(name, color, keys) {
+    function Player(name, color, keys, painter) {
       this.name = name;
       this.color = color;
       this.keys = keys;
+      this.painter = painter;
       this.score = 0;
     }
 
@@ -227,6 +213,7 @@
       this.radius = 1;
       this.course = Math.floor((Math.random() * 2 * Math.PI) + 0);
       this.size = 5;
+      this.bonuses = [];
       this.keysPressed = [false, false];
       this.lastKeyPressed = "none";
       document.addEventListener("keydown", function(event) {
@@ -260,7 +247,9 @@
 
     PlayerInstance.prototype.play = function() {
       this.updateCourse();
-      return this.updatePos();
+      this.updatePos();
+      this.paint();
+      return this.playBonuses();
     };
 
     PlayerInstance.prototype.updatePos = function() {
@@ -283,6 +272,27 @@
       if (this.course > 2 * Math.PI) {
         return this.course -= 2 * Math.PI;
       }
+    };
+
+    PlayerInstance.prototype.paint = function() {
+      this["static"].painter.paintTrace(this);
+      this["static"].painter.paintHead(this);
+      return this["static"].painter.paintLastHead(this);
+    };
+
+    PlayerInstance.prototype.playBonuses = function() {
+      var i, _results;
+      i = 0;
+      _results = [];
+      while (i < this.bonuses.length) {
+        if (this.bonuses[i].duration === 0) {
+          _results.push(this.bonuses.splice(i, 1));
+        } else {
+          this.bonuses[i].play();
+          _results.push(i++);
+        }
+      }
+      return _results;
     };
 
     return PlayerInstance;
@@ -321,7 +331,7 @@
       this.players = new Array();
       for (_i = 0, _len = playersConfiguration.length; _i < _len; _i++) {
         player = playersConfiguration[_i];
-        this.players.push(new Player(player.name, player.colour, new Array(player.left, player.right)));
+        this.players.push(new Player(player.name, player.colour, new Array(player.left, player.right), this.painter));
       }
       round = new Round(this);
       return round.launch();

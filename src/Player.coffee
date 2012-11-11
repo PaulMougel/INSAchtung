@@ -1,6 +1,6 @@
 # represents a player in the game, considering his coulour, his keys, his name
 class Player
-	constructor: (@name, @color, @keys) ->
+	constructor: (@name, @color, @keys, @painter) ->
 		@score = 0
 
 # represents the snake associated with a player during a specific round
@@ -11,6 +11,7 @@ class PlayerInstance
 		@radius = 1
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
+		@bonuses = []
 
 		# Keys logic
 		@keysPressed = [false, false]
@@ -45,6 +46,8 @@ class PlayerInstance
 	play: () ->
 		@updateCourse()
 		@updatePos()
+		@paint()
+		@playBonuses()
 
 	updatePos: () ->
 		@lastPos.x = @pos.x
@@ -64,3 +67,15 @@ class PlayerInstance
 		@course = @course + val
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
+	paint: () ->
+		@static.painter.paintTrace(@)
+		@static.painter.paintHead(@)
+		@static.painter.paintLastHead(@)
+	playBonuses: () ->
+		i = 0
+		while (i < @bonuses.length)
+			if @bonuses[i].duration is 0
+				@bonuses.splice(i, 1)
+			else
+				@bonuses[i].play()
+				i++
