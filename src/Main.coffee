@@ -1,9 +1,5 @@
 controller = new Controller()
 
-playerSelectionForm = document.getElementById("playerSelectionForm")
-canvas = document.getElementById("canvas")
-addPlayerButton = document.getElementById("addPlayerButton")
-
 playersConfiguration = new Array(
 	{left: undefined, right: undefined, name: "Greenlee", colour: "green"},
 	{left: undefined, right: undefined, name: "Greydon", colour: "grey"},
@@ -17,11 +13,16 @@ window.setLeftKey = (button, playerIndex) ->
 	document.onkeydown = (e) =>
 		playersConfiguration[playerIndex].left = e.keyCode
 		button.value = String.fromCharCode(e.keyCode)
-
+		document.onkeydown = undefined
+		
 window.setRightKey = (button, playerIndex) ->
 	document.onkeydown = (e) =>
 		playersConfiguration[playerIndex].right = e.keyCode
 		button.value = String.fromCharCode(e.keyCode)
+		document.onkeydown = undefined
+
+playerSelectionForm = document.getElementById("playerSelectionForm")
+canvas = document.getElementById("canvas")
 
 playerSelectionForm.onsubmit = (event) ->
 	# Show canvas
