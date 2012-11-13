@@ -15,7 +15,7 @@ class Round
 				# loop on this function until round is over
 				setTimeout(main, delay)
 
-				@controller.painter.clearBoard()
+				@controller.painter.getReadyForNewLap()
 
 				# Play turn
 				for player in @alivePlayers
@@ -26,8 +26,8 @@ class Round
 					player.play()
 				
 				# Collision detection
-				for player in @alivePlayers
-					@controller.crashController.checkForCrashes(player)
+				#for player in @alivePlayers
+				#	@controller.crashController.checkForCrashes(player)
 
 		setTimeout(main, delay)
 
