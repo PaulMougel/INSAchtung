@@ -6,11 +6,11 @@ class Painter
 		@context2 = @layer2.getContext('2d')
 
 	paintLastPosition: (player) ->
-		if player.positions[player.positions.length - 2]
-			@drawLine(@context1, player.positions[player.positions.length - 2], player.lastPos(), player.size, player.static.color)
+		if player.pos(-1)
+			@drawLine(@context1, player.pos(-1), player.pos(), player.size, player.static.color)
 
 	paintHead: (player) ->
-		@drawCircle(@context2, player.lastPos().x, player.lastPos().y, player.size / 2, "yellow")
+		@drawCircle(@context2, player.pos().x, player.pos().y, player.size / 2, "yellow")
 
 	drawCircle: (context, x, y, radius, color) ->
 		context.beginPath()
