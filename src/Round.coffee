@@ -6,6 +6,8 @@ class Round
 			@alivePlayers.push(new PlayerInstance(player))
 		@controller.crashController.setActiveRound(@)
 
+		@controller.bitmap.reset()
+
 	launch: () ->
 		@controller.painter.clearBoard()
 
@@ -25,9 +27,10 @@ class Round
 
 					player.play()
 				
-				# Collision detection
-				for player in @alivePlayers
+					# Collision detection
 					@controller.crashController.checkForCrashes(player)
+
+					@controller.bitmap.updatePlayer(player)
 
 		setTimeout(main, delay)
 
