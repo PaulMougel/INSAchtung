@@ -1,3 +1,7 @@
+# Painter is a class that helps game's components to take advantage of the canvas.
+# There is two canvas in the page, in order to draw separately persistent items in the first one and non-persistent ones in the second one.
+# The second canvas is thus redrawn in each lap of Round.main() that calls @.getReadyForNewLap() and is used for snakes's heads and boundaries - that could blink, while the snakes's traces are drawn on the first one.
+# In order to have no artefacts or bad paintings, the second canvas has a z-index greater than the first one.
 class Painter
 	constructor: (@bitmap) ->
 		@layer1 = document.getElementById("layer1")
