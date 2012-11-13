@@ -1,0 +1,2 @@
+# ignoring js files, which are compiled by coffee
+*.js

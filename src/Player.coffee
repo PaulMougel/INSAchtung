@@ -63,7 +63,7 @@ class PlayerInstance
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
 	paint: () ->
-		@static.painter.paintPositions(@)
+		@static.painter.paintLastPosition(@)
 		@static.painter.paintHead(@)
 
 	playBonuses: () ->

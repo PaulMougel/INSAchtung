@@ -22,11 +22,13 @@ window.setRightKey = (button, playerIndex) ->
 		document.onkeydown = undefined
 
 playerSelectionForm = document.getElementById("playerSelectionForm")
-canvas = document.getElementById("canvas")
+layer1 = document.getElementById("layer1")
+layer2 = document.getElementById("layer2")
 
 playerSelectionForm.onsubmit = (event) ->
 	# Show canvas
-	canvas.style.display = "block"
+	layer1.style.display = "block"
+	layer2.style.display = "block"
 	
 	# Clean the players configuration by removing players
 	# without any keys associated
