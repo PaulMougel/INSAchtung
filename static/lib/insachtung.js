@@ -289,7 +289,14 @@
     };
 
     PlayerInstance.prototype.lastPos = function() {
-      return this.positions[this.positions.length - 1];
+      return this.pos();
+    };
+
+    PlayerInstance.prototype.pos = function(index) {
+      if (index == null) {
+        index = 1;
+      }
+      return this.positions[this.positions.length - index];
     };
 
     return PlayerInstance;
