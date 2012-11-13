@@ -76,4 +76,10 @@ class PlayerInstance
 				i++
 
 	lastPos: () ->
-		@positions[@positions.length - 1]
+		@pos()
+
+	pos: (index = 0) ->
+		# pos() = pos(0) = current position
+		# pos(-1) =  last position
+		# etc.
+		@positions[@positions.length - 1 - index]
