@@ -26,8 +26,8 @@ class Round
 					player.play()
 				
 				# Collision detection
-				#for player in @alivePlayers
-				#	@controller.crashController.checkForCrashes(player)
+				for player in @alivePlayers
+					@controller.crashController.checkForCrashes(player)
 
 		setTimeout(main, delay)
 
