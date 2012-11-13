@@ -1,6 +1,6 @@
 # INSAchtung
 
-The world-famous arcade game inspired from _Achtung, die Kurve !_.
+The world-famous arcade game inspired by _Achtung, die Kurve !_.
 
 ## get coffee
 This step is optional.

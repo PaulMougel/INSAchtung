@@ -49,7 +49,7 @@ class PlayerInstance
 		@paint()
 
 	updatePos: () ->
-		@positions.push(new Position(@lastPos().x + Math.cos(@course) * @radius, @lastPos().y + Math.sin(@course)*@radius, ACTION.LINE_TO))
+		@positions.push(new Position(@lastPos().x + Math.cos(@course) * @radius, @lastPos().y + Math.sin(@course) * @radius, ACTION.LINE_TO))
 
 	updateCourse: () ->
 		if @lastKeyPressed is "left"
