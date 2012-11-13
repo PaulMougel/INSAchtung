@@ -79,7 +79,8 @@ class PlayerInstance
 		@pos()
 
 	pos: (index = 0) ->
+		console.log index
 		# pos() = pos(0) = current position
 		# pos(-1) =  last position
 		# etc.
-		@positions[@positions.length - 1 - index]
+		@positions[@positions.length - 1 + index]
