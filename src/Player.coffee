@@ -6,7 +6,7 @@ class Player
 # represents the snake associated with a player during a specific round
 class PlayerInstance
 	constructor: (@static) ->
-		@radius = 1
+		@speed = 2.5
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
 		@bonuses = []
@@ -49,19 +49,20 @@ class PlayerInstance
 		@paint()
 
 	updatePos: () ->
-		@positions.push(new Position(@lastPos().x + Math.cos(@course) * @radius, @lastPos().y + Math.sin(@course) * @radius, ACTION.LINE_TO))
+		@positions.push(new Position(@lastPos().x + Math.cos(@course) * @speed, @lastPos().y + Math.sin(@course) * @speed, ACTION.LINE_TO))
 
 	updateCourse: () ->
 		if @lastKeyPressed is "left"
-			val = - 2*Math.PI / 320
+			val = - 5*Math.PI / 320
 		else if @lastKeyPressed is "right"
-			val = 2*Math.PI / 320
+			val = 5*Math.PI / 320
 		else
 			val = 0
 
 		@course = @course + val
 		if @course > 2*Math.PI
 			@course -= 2*Math.PI
+
 	paint: () ->
 		@static.painter.paintLastPosition(@)
 		@static.painter.paintHead(@)

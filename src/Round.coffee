@@ -11,7 +11,7 @@ class Round
 	launch: () ->
 		@controller.painter.clearBoard()
 
-		delay = 1/30
+		delay = 1000 / 60
 		main = =>
 			if not @isOver
 				# loop on this function until round is over
@@ -26,7 +26,7 @@ class Round
 						player.bonuses.push(new NoWall(player, 25))
 
 					player.play()
-				
+
 					# Collision detection
 					@controller.crashController.checkForCrashes(player)
 
