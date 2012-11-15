@@ -1,8 +1,10 @@
 class Controller
 	constructor: () ->
-		@players
-		@bitmap = new Bitmap(800, 800, 20)
-		@painter = new Painter(@bitmap)
+		@canvasWidth = 800;
+		@canvasHeight = 800;
+		@boundariesWidth = 20
+		@players = []
+		@painter = new Painter(@)
 		@crashController = new CrashController(@)
 
 	notifyRoundIsDone: () ->

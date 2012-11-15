@@ -4,4 +4,4 @@ ACTION = {
 }
 
 class Position
-	constructor: (@x, @y, @action) ->
+	constructor: (@x, @y, @radius, @action) ->

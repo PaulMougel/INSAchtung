@@ -3,9 +3,13 @@
 # The second canvas is thus redrawn in each lap of Round.main() that calls @.getReadyForNewLap() and is used for snakes's heads and boundaries - that could blink, while the snakes's traces are drawn on the first one.
 # In order to have no artefacts or bad paintings, the second canvas has a z-index greater than the first one.
 class Painter
-	constructor: (@bitmap) ->
+	constructor: (@controller) ->
 		@layer1 = document.getElementById("layer1")
+		@layer1.width = @controller.canvasWidth
+		@layer1.height = @controller.canvasHeight
 		@layer2 = document.getElementById("layer2")
+		@layer2.width = @controller.canvasWidth
+		@layer2.height = @controller.canvasHeight
 		@context1 = @layer1.getContext('2d')
 		@context2 = @layer2.getContext('2d')
 
@@ -35,8 +39,8 @@ class Painter
 
 	paintBoundaries: () ->
 		@context2.fillStyle = "yellow"
-		@context2.fillRect(0, 0, @bitmap.width, @bitmap.height)
-		@context2.clearRect(@bitmap.boundariesWidth, @bitmap.boundariesWidth, @bitmap.width - 2 * @bitmap.boundariesWidth, @bitmap.height - 2 * @bitmap.boundariesWidth)
+		@context2.fillRect(0, 0, @layer2.width, @layer2.height)
+		@context2.clearRect(@controller.boundariesWidth, @controller.boundariesWidth, @layer2.width - 2 * @controller.boundariesWidth, @layer2.height - 2 * @controller.boundariesWidth)
 
 	clearBoard: () ->
 		@context1.clearRect(0, 0, @layer1.width, @layer1.height)

@@ -1,12 +1,11 @@
 class Round
 	constructor: (@controller) ->
 		@isOver = false
-		@alivePlayers = []
+		@players = []
 		for player in @controller.players
-			@alivePlayers.push(new PlayerInstance(player))
+			@players.push(new PlayerInstance(player))
+		@alivePlayers = @players.slice()
 		@controller.crashController.setActiveRound(@)
-
-		@controller.bitmap.reset()
 
 	launch: () ->
 		@controller.painter.clearBoard()
@@ -29,8 +28,6 @@ class Round
 
 					# Collision detection
 					@controller.crashController.checkForCrashes(player)
-
-					@controller.bitmap.updatePlayer(player)
 
 		setTimeout(main, delay)
 
