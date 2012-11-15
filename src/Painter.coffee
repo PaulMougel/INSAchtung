@@ -13,6 +13,9 @@ class Painter
 		@context1 = @layer1.getContext('2d')
 		@context2 = @layer2.getContext('2d')
 
+		@clearBoard()
+		@paintBoundaries()
+
 	paintLastPosition: (player) ->
 		if player.pos(-1)
 			@drawLine(@context1, player.pos(-1), player.pos(), player.size, player.static.color)

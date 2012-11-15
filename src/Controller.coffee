@@ -6,19 +6,31 @@ class Controller
 		@players = []
 		@painter = new Painter(@)
 		@crashController = new CrashController(@)
+		@roundInProgress = false
 
 	notifyRoundIsDone: () ->
 		for player in @players
 			console.log(player.name + ": " + player.score)
-		for player in @players
-			if player.score >= (@players.length - 1) * 10
-				return
-		round = new Round(@)
-		round.launch()
+		@roundInProgress = false
 
 	run: (playersConfiguration) ->
 		@players = new Array()
 		for player in playersConfiguration
 			@players.push(new Player(player.name, player.colour, new Array(player.left, player.right), @painter))
-		round = new Round(@)
-		round.launch()
+		
+		document.addEventListener("keypress",
+			(event) =>
+				if event.keyCode is 32
+					if @roundInProgress or @partyIsOver()
+						return
+					@roundInProgress = true
+					round = new Round(@)
+					round.launch()
+		, false
+		)
+
+	partyIsOver: () ->
+		for player in @players
+			if player.score >= (@players.length - 1) * 10
+				true
+		false
