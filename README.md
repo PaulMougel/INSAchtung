@@ -1,6 +1,6 @@
-# INSAchtung
+# _Können wir die Kurve umbringen ?_
 
-The world-famous arcade game inspired by _Achtung, die Kurve !_.
+_Können wir die Kurve umbringen ?_ (formerly known as _INSAchtung_), the world-famous arcade game inspired by _Achtung, die Kurve !_.
 
 ## get coffee
 ### Archlinux
