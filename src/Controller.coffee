@@ -14,7 +14,6 @@ class Controller
 		@roundInProgress = false
 
 	run: (playersConfiguration) ->
-		@players = new Array()
 		for player in playersConfiguration
 			@players.push(new Player(player.name, player.colour, new Array(player.left, player.right), @painter))
 		
@@ -31,6 +30,6 @@ class Controller
 
 	partyIsOver: () ->
 		for player in @players
-			if player.score >= (@players.length - 1) * 10
-				true
-		false
+			if player.score >= ((@players.length - 1) * 10)
+				return true
+		return false

@@ -13,7 +13,7 @@ class CrashController
 			for otherPlayer in @activeRound.players
 				if otherPlayer isnt player
 					for position in otherPlayer.positions
-						if Math.sqrt(Math.pow(position.x - player.pos().x, 2) + Math.pow(position.y - player.pos().y, 2)) <= position.radius + player.pos().radius
+						if player.pos().collidesWith(position)
 							@activeRound.notifyPlayerDeath(player)
 							return
 
@@ -22,6 +22,6 @@ class CrashController
 				if ignoreOwnPositions and Math.sqrt(Math.pow(player.pos(-i).x - player.pos().x, 2) + Math.pow(player.pos(-i).y - player.pos().y, 2)) > player.pos(-i).radius + player.pos().radius
 					ignoreOwnPositions = false
 				if not ignoreOwnPositions
-					if Math.sqrt(Math.pow(player.pos(-i).x - player.pos().x, 2) + Math.pow(player.pos(-i).y - player.pos().y, 2)) <= player.pos(-i).radius + player.pos().radius
-							@activeRound.notifyPlayerDeath(player)
-							return
+					if player.pos().collidesWith(player.pos(-i))
+						@activeRound.notifyPlayerDeath(player)
+						return
