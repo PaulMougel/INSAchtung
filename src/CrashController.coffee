@@ -9,6 +9,7 @@ class CrashController
 		# Check for boundaries collisions
 		if player.pos(-1).x < @controller.boundariesWidth or player.pos(-1).x > @controller.canvasWidth - @controller.boundariesWidth or player.pos(-1).y < @controller.boundariesWidth or player.pos(-1).y > @controller.canvasHeight - @controller.boundariesWidth
 			@activeRound.notifyPlayerDeath(player)
+		# Check for traces collisions
 		else
 			for otherPlayer in @activeRound.players
 				if otherPlayer isnt player

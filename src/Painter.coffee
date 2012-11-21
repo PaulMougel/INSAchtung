@@ -17,7 +17,7 @@ class Painter
 		@paintBoundaries()
 
 	paintLastPosition: (player) ->
-		if player.pos(-1)
+		if player.pos(0).action is ACTION.LINE_TO and player.pos(-1)
 			@drawLine(@context1, player.pos(-1), player.pos(), player.size, player.static.color)
 
 	paintHead: (player) ->
@@ -35,10 +35,9 @@ class Painter
 		context.lineWidth = width
 	
 		context.moveTo(sourcePos.x, sourcePos.y)
-		if targetPos.action is ACTION.LINE_TO
-			context.lineTo(targetPos.x, targetPos.y)
+		context.lineTo(targetPos.x, targetPos.y)
 
-		@context1.stroke()
+		context.stroke()
 
 	paintBoundaries: () ->
 		@context2.fillStyle = "yellow"

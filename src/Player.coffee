@@ -1,4 +1,4 @@
-# represents a player in the game, considering his coulour, his keys, his name
+# represents a player in the game, considering his colour, his keys, his name
 class Player
 	constructor: (@name, @color, @keys, @painter) ->
 		@score = 0
@@ -6,11 +6,15 @@ class Player
 # represents the snake associated with a player during a specific round
 class PlayerInstance
 	constructor: (@static) ->
-		@speed = 2.5
+		@speed = 2
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
 		@size = 5
 		@bonuses = []
-		@positions = [new Position(Math.floor((Math.random()*700)+100), Math.floor((Math.random()*700)+100), ACTION.MOVE_TO)]
+		@positions = []
+		@getFirstPosition()
+		
+		@noWallTime = new Date()
+		@updateNoWallTime()
 
 		# Keys logic
 		@keysPressed = [false, false]
@@ -42,7 +46,21 @@ class PlayerInstance
 						@lastKeyPressed = "none"
 		, false)
 
+	getFirstPosition: () ->
+		x = Math.round((Math.random() * 600) + 100)
+		y = Math.round((Math.random() * 600) + 100)
+		@positions.push(new Position(x, y, @size / 2, ACTION.MOVE_TO))
+
+	updateNoWallTime: () ->
+		@noWallTime = new Date()
+		@noWallTime.setSeconds(@noWallTime.getSeconds() + Math.round((Math.random() * 4) + 1))
+
 	play: () ->
+		if (new Date() - @noWallTime) > 0
+			console.log("no wall")
+			@updateNoWallTime()
+			@bonuses.push(new NoWall(@, 10))
+
 		@updateCourse()
 		@updatePos()
 		@playBonuses()
