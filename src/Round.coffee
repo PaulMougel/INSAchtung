@@ -6,7 +6,7 @@ class Round
 			@players.push(new PlayerInstance(player))
 		@alivePlayers = @players.slice()
 
-		@bonusesTypes = new Array(SpeedBoost)
+		@bonusesTypes = new Array(SpeedBoost, SlowDown)
 		@activeDrawnBonuses = []
 
 		@controller.crashController.setActiveRound(@)
@@ -33,14 +33,12 @@ class Round
 					activeDrawnBonus.paint(@controller.painter)
 
 				# Add random bonuses
-				if (Math.random() < 0.01)
+				if (Math.random() < 0.1)
 					# Choose a new bonus
 					bonusType = @bonusesTypes[Math.floor(Math.random() * @bonusesTypes.length)]
 					x = Math.random() * @controller.constants.canvasSize
 					y = Math.random() * @controller.constants.canvasSize
-					size = 10
-					color = "yellow"
-					@activeDrawnBonuses.push(new DrawnBonus(bonusType, x, y, size, color))
+					@activeDrawnBonuses.push(new DrawnBonus(bonusType, x, y))
 
 		setTimeout(main, delay)
 
@@ -66,6 +64,6 @@ class Round
 				@activeDrawnBonuses.splice(i, 1)
 			else
 				i++
-		# Attach bonus to player
-		# FIXME: remove static duration
-		player.bonuses.push(new drawnBonus.bonusType(player, 60))
+		
+		# Attach behavior to player
+		drawnBonus.attachTo(player)

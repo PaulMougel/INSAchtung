@@ -1,3 +1,20 @@
+# Bonus drawn on screen
+#
+# Contains its position, size and bonus type
+# The bonus type is the class that will be instantiated when
+# a player collides with it
+class DrawnBonus
+	constructor: (@bonusType, x, y) ->
+		@color = @bonusType.color
+		size = 10
+		@pos = new Position(x, y, size, ACTION.LINE_TO)
+	
+	attachTo: (player) ->
+		player.bonuses.push(new @bonusType(player, 60))
+
+	paint: (painter) ->
+		painter.paintBonus(@)
+
 # Base class for bonuses. 
 # Bonus' intelligence should placed here to set boundaries between classes.
 class Bonus
@@ -9,23 +26,34 @@ class NoWall extends Bonus
 		--@duration
 		@player.lastPos().action = ACTION.MOVE_TO
 
-# Modifies the player's speed
+# Speeds up the player !
 class SpeedBoost extends Bonus
+	@color = "yellow"
+
 	constructor: (player, duration) ->
 		super(player, duration)
-		@speedValue = 2
+		@speedValue = 1.5
 
-		@player.speed += @speedValue
+		@player.speed *= @speedValue
 
 	play: () ->
 		--@duration
 
 		if @duration is 0
-			@player.speed -= @speedValue
+			@player.speed /= @speedValue
 
-class DrawnBonus
-	constructor: (@bonusType, x, y, size, @color) ->
-		@pos = new Position(x, y, size, ACTION.LINE_TO)
-		
-	paint: (painter) ->
-		painter.paintBonus(@)
+# Slows down the player !
+class SlowDown extends Bonus
+	@color = "red"
+
+	constructor: (player, duration) ->
+		super(player, duration)
+		@speedValue = 0.5
+
+		@player.speed *= @speedValue
+
+	play: () ->
+		--@duration
+
+		if @duration is 0
+			@player.speed /= @speedValue
