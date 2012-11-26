@@ -57,3 +57,19 @@ class SlowDown extends Bonus
 
 		if @duration is 0
 			@player.speed /= @speedValue
+
+# Make the player fatter !
+class BeFat extends Bonus
+	@color = "green"
+
+	constructor: (player, duration) ->
+		super(player, duration)
+
+		@sizeValue = 2
+		@player.size *= @sizeValue
+
+	play: () ->
+		--@duration
+
+		if @duration is 0
+			@player.size /= @sizeValue

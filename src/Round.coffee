@@ -6,7 +6,7 @@ class Round
 			@players.push(new PlayerInstance(player))
 		@alivePlayers = @players.slice()
 
-		@bonusesTypes = new Array(SpeedBoost, SlowDown)
+		@bonusesTypes = new Array(SpeedBoost, SlowDown, BeFat)
 		@activeDrawnBonuses = []
 
 		@controller.crashController.setActiveRound(@)
