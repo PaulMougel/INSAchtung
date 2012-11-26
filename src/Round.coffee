@@ -22,12 +22,12 @@ class Round
 
 				@controller.painter.getReadyForNewLap()
 
-				# Play turn
+				# Play players' turn
 				for player in @alivePlayers
 					player.play()
 					# Collision detection
 					@controller.crashController.checkForCrashes(player)
-
+				
 				# Draw bonuses
 				for activeDrawnBonus in @activeDrawnBonuses
 					activeDrawnBonus.paint(@controller.painter)
@@ -57,3 +57,15 @@ class Round
 		if @alivePlayers.length is 1
 			@isOver = true
 			@controller.notifyRoundIsDone()
+
+	notifyBonusCollision: (player, drawnBonus) ->
+		# Delete the bonus from screen
+		i = 0
+		while (i < @activeDrawnBonuses.length)
+			if @activeDrawnBonuses[i] is drawnBonus
+				@activeDrawnBonuses.splice(i, 1)
+			else
+				i++
+		# Attach bonus to player
+		# FIXME: remove static duration
+		player.bonuses.push(new drawnBonus.bonusType(player, 60))

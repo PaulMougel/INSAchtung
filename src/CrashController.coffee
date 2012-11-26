@@ -9,8 +9,17 @@ class CrashController
 		# Check for boundaries collisions
 		if player.pos().action is ACTION.LINE_TO and (player.pos().x < @controller.constants.boundariesWidth or player.pos().x > @controller.constants.canvasSize - @controller.constants.boundariesWidth or player.pos().y < @controller.constants.boundariesWidth or player.pos().y > @controller.constants.canvasSize - @controller.constants.boundariesWidth)
 			@activeRound.notifyPlayerDeath(player)
-		# Check for traces collisions
+
 		else
+			# Check for bonuses collisions
+			bonusesThatCollide = new Array()
+			for bonus in @activeRound.activeDrawnBonuses
+				if player.pos().collidesWith(bonus.pos)
+					bonusesThatCollide.push(bonus)
+			for bonus in bonusesThatCollide
+				@activeRound.notifyBonusCollision(player, bonus)
+
+			# Check for traces collisions
 			for otherPlayer in @activeRound.players
 				if otherPlayer isnt player
 					for position in otherPlayer.positions

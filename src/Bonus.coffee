@@ -11,8 +11,9 @@ class NoWall extends Bonus
 
 # Modifies the player's speed
 class SpeedBoost extends Bonus
-	constructor: (player, duration, @speedValue) ->
+	constructor: (player, duration) ->
 		super(player, duration)
+		@speedValue = 2
 
 		@player.speed += @speedValue
 
@@ -23,6 +24,8 @@ class SpeedBoost extends Bonus
 			@player.speed -= @speedValue
 
 class DrawnBonus
-	constructor: (@bonusType, @x, @y, @size, @color) ->
+	constructor: (@bonusType, x, y, size, @color) ->
+		@pos = new Position(x, y, size, ACTION.LINE_TO)
+		
 	paint: (painter) ->
 		painter.paintBonus(@)

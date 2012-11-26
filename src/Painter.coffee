@@ -40,7 +40,7 @@ class Painter
 		context.stroke()
 
 	paintBonus: (bonus) ->
-		@drawCircle(@context2, bonus.x, bonus.y, bonus.size / 2, bonus.color)
+		@drawCircle(@context2, bonus.pos.x, bonus.pos.y, bonus.pos.radius / 2, bonus.color)
 
 	paintBoundaries: () ->
 		@context2.fillStyle = "yellow"
