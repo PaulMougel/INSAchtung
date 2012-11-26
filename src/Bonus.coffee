@@ -21,3 +21,8 @@ class SpeedBoost extends Bonus
 
 		if @duration is 0
 			@player.speed -= @speedValue
+
+class DrawnBonus
+	constructor: (@bonusType, @x, @y, @size, @color) ->
+	paint: (painter) ->
+		painter.paintBonus(@)

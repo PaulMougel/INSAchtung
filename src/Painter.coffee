@@ -39,6 +39,9 @@ class Painter
 
 		context.stroke()
 
+	paintBonus: (bonus) ->
+		@drawCircle(@context2, bonus.x, bonus.y, bonus.size / 2, bonus.color)
+
 	paintBoundaries: () ->
 		@context2.fillStyle = "yellow"
 		@context2.fillRect(0, 0, @layer2.width, @layer2.height)

@@ -5,6 +5,10 @@ class Round
 		for player in @controller.players
 			@players.push(new PlayerInstance(player))
 		@alivePlayers = @players.slice()
+
+		@bonusesTypes = new Array(SpeedBoost)
+		@activeDrawnBonuses = []
+
 		@controller.crashController.setActiveRound(@)
 
 	launch: () ->
@@ -23,6 +27,20 @@ class Round
 					player.play()
 					# Collision detection
 					@controller.crashController.checkForCrashes(player)
+
+				# Draw bonuses
+				for activeDrawnBonus in @activeDrawnBonuses
+					activeDrawnBonus.paint(@controller.painter)
+
+				# Add random bonuses
+				if (Math.random() < 0.01)
+					# Choose a new bonus
+					bonusType = @bonusesTypes[Math.floor(Math.random() * @bonusesTypes.length)]
+					x = Math.random() * @controller.constants.canvasSize
+					y = Math.random() * @controller.constants.canvasSize
+					size = 10
+					color = "yellow"
+					@activeDrawnBonuses.push(new DrawnBonus(bonusType, x, y, size, color))
 
 		setTimeout(main, delay)
 
