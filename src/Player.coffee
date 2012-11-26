@@ -58,10 +58,9 @@ class PlayerInstance
 
 	play: () ->
 		if (new Date() - @noWallTime) > 0
-			console.log("no wall")
 			@updateNoWallTime()
-			@bonuses.push(new NoWall(@, 10))
-
+			console.log(Math.round(2 * @size / @speed))
+			@bonuses.push(new NoWall(@, Math.ceil(2 * @size / @speed)))
 		@updateCourse()
 		@updatePos()
 		@playBonuses()
