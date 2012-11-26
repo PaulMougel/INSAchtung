@@ -1,14 +1,15 @@
 # represents a player in the game, considering his colour, his keys, his name
 class Player
-	constructor: (@name, @color, @keys, @painter) ->
+	constructor: (@name, @color, @keys, @constants, @painter) ->
 		@score = 0
 
 # represents the snake associated with a player during a specific round
 class PlayerInstance
 	constructor: (@static) ->
-		@speed = 2
+		@speed = @static.constants.playerSpeed
 		@course = Math.floor((Math.random()*2*Math.PI)+0);
-		@size = 5
+		@courseOffset = @static.constants.playerCourseOffset
+		@size = @static.constants.playerSize
 		@bonuses = []
 		@positions = []
 		@getFirstPosition()
@@ -47,8 +48,8 @@ class PlayerInstance
 		, false)
 
 	getFirstPosition: () ->
-		x = Math.round((Math.random() * 600) + 100)
-		y = Math.round((Math.random() * 600) + 100)
+		x = Math.round((Math.random() * (@static.constants.canvasSize - (@static.constants.boundariesWidth + @static.constants.canvasSize/8))) + @static.constants.boundariesWidth + @static.constants.canvasSize/8)
+		y = Math.round((Math.random() * (@static.constants.canvasSize - (@static.constants.boundariesWidth + @static.constants.canvasSize/8))) + @static.constants.boundariesWidth + @static.constants.canvasSize/8)
 		@positions.push(new Position(x, y, @size / 2, ACTION.MOVE_TO))
 
 	updateNoWallTime: () ->
@@ -71,15 +72,13 @@ class PlayerInstance
 
 	updateCourse: () ->
 		if @lastKeyPressed is "left"
-			val = - 5*Math.PI / 320
+			val = - @courseOffset
 		else if @lastKeyPressed is "right"
-			val = 5*Math.PI / 320
+			val = @courseOffset
 		else
 			val = 0
 
 		@course = @course + val
-		if @course > 2*Math.PI
-			@course -= 2*Math.PI
 
 	paint: () ->
 		@static.painter.paintLastPosition(@)

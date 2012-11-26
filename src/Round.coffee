@@ -10,7 +10,7 @@ class Round
 	launch: () ->
 		@controller.painter.clearBoard()
 
-		delay = 1000 / 60
+		delay = 1000 / 30
 		main = =>
 			if not @isOver
 				# loop on this function until round is over

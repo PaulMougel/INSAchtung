@@ -1,5 +1,5 @@
 ACTION = {
-  MOVE_TO : 1, 
+  MOVE_TO: 1, 
   LINE_TO: 2	
 }
 

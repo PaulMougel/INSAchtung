@@ -5,11 +5,11 @@
 class Painter
 	constructor: (@controller) ->
 		@layer1 = document.getElementById("layer1")
-		@layer1.width = @controller.canvasWidth
-		@layer1.height = @controller.canvasHeight
+		@layer1.width = @controller.constants.canvasSize
+		@layer1.height = @controller.constants.canvasSize
 		@layer2 = document.getElementById("layer2")
-		@layer2.width = @controller.canvasWidth
-		@layer2.height = @controller.canvasHeight
+		@layer2.width = @controller.constants.canvasSize
+		@layer2.height = @controller.constants.canvasSize
 		@context1 = @layer1.getContext('2d')
 		@context2 = @layer2.getContext('2d')
 
@@ -42,10 +42,11 @@ class Painter
 	paintBoundaries: () ->
 		@context2.fillStyle = "yellow"
 		@context2.fillRect(0, 0, @layer2.width, @layer2.height)
-		@context2.clearRect(@controller.boundariesWidth, @controller.boundariesWidth, @layer2.width - 2 * @controller.boundariesWidth, @layer2.height - 2 * @controller.boundariesWidth)
+		@context2.clearRect(@controller.constants.boundariesWidth, @controller.constants.boundariesWidth, @layer2.width - 2 * @controller.constants.boundariesWidth, @layer2.height - 2 * @controller.constants.boundariesWidth)
 
 	clearBoard: () ->
-		@context1.clearRect(0, 0, @layer1.width, @layer1.height)
+		@context1.fillStyle = "black"
+		@context1.fillRect(0, 0, @layer1.width, @layer1.height)
 		@context2.clearRect(0, 0, @layer2.width, @layer2.height)
 
 	getReadyForNewLap: () ->
